@@ -2,6 +2,8 @@ package com.danrocha.cde.controllers;
 
 import com.danrocha.cde.entities.Empresa;
 import com.danrocha.cde.enums.TipoEmpresa;
+import jakarta.faces.application.NavigationHandler;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
@@ -32,4 +34,11 @@ public class EmpresaBean implements Serializable {
                 empresa.getRazaoSocial(), empresa.getNomeFantasia(), empresa.getCnpj());
     }
 
+    public String redirecionarPaginaPara(String pagina) {
+        return switch (pagina) {
+            case "index" -> "index?faces-redirect=true";
+            case "ajuda" -> "ajuda?faces-redirect=true";
+            default -> null;
+        };
+    }
 }
