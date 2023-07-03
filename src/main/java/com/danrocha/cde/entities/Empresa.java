@@ -4,12 +4,17 @@ import com.danrocha.cde.enums.TipoEmpresa;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "empresas")
 public class Empresa implements Serializable {
@@ -19,9 +24,8 @@ public class Empresa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @NotBlank(message = "Campo obrigatório")
-    @Column(name = "nome_fantasia", nullable = false, length = 80)
+
+    @Column(name = "nome_fantasia", length = 80)
     private String nomeFantasia;
     
     @NotBlank(message = "Campo obrigatório.")
@@ -40,67 +44,14 @@ public class Empresa implements Serializable {
     @NotNull(message = "Campo obrigatório.")
     @Enumerated(EnumType.STRING)
     private TipoEmpresa tipo;
-    
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "ramo_atividade_id")
     private RamoAtividade ramoAtividade;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNomeFantasia() {
-        return nomeFantasia;
-    }
-
-    public void setNomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
-    }
-
-    public String getRazaoSocial() {
-        return razaoSocial;
-    }
-
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public @NotNull LocalDate getFundadoEm() {
-        return fundadoEm;
-    }
-
-    public void setFundadoEm(@NotNull LocalDate fundadoEm) {
-        this.fundadoEm = fundadoEm;
-    }
-
-    public @NotNull TipoEmpresa getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoEmpresa tipo) {
-        this.tipo = tipo;
-    }
-
-    public @NotNull RamoAtividade getRamoAtividade() {
-        return ramoAtividade;
-    }
-
-    public void setRamoAtividade(@NotNull RamoAtividade ramoAtividade) {
-        this.ramoAtividade = ramoAtividade;
-    }
+    @Column(precision = 10, scale = 2)
+    private BigDecimal faturamento;
 
     @Override
     public String toString() {
