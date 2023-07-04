@@ -1,24 +1,19 @@
 package com.danrocha.cde.entities;
 
 import com.danrocha.cde.enums.TipoEmpresa;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 
-import java.io.Serial;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "empresas")
 public class Empresa implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -57,6 +52,70 @@ public class Empresa implements Serializable {
     public String toString() {
 	return "Empresa [id=" + id + ", nomeFantasia=" + nomeFantasia + ", razaoSocial=" + razaoSocial + ", cnpj="
 		+ cnpj + ", fundadoEm=" + fundadoEm + ", tipo=" + tipo + ", ramoAtividade=" + ramoAtividade + "]";
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNomeFantasia() {
+        return nomeFantasia;
+    }
+
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
+    }
+
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public LocalDate getFundadoEm() {
+        return fundadoEm;
+    }
+
+    public void setFundadoEm(LocalDate fundadoEm) {
+        this.fundadoEm = fundadoEm;
+    }
+
+    public TipoEmpresa getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEmpresa tipo) {
+        this.tipo = tipo;
+    }
+
+    public RamoAtividade getRamoAtividade() {
+        return ramoAtividade;
+    }
+
+    public void setRamoAtividade(RamoAtividade ramoAtividade) {
+        this.ramoAtividade = ramoAtividade;
+    }
+
+    public BigDecimal getFaturamento() {
+        return faturamento;
+    }
+
+    public void setFaturamento(BigDecimal faturamento) {
+        this.faturamento = faturamento;
     }
 
     @Override

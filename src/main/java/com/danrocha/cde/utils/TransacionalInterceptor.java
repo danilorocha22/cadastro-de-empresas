@@ -1,21 +1,18 @@
 package com.danrocha.cde.utils;
 
-import jakarta.annotation.Priority;
-import jakarta.inject.Inject;
-import jakarta.interceptor.AroundInvoke;
-import jakarta.interceptor.Interceptor;
-import jakarta.interceptor.InvocationContext;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-
-import java.io.Serial;
+import javax.annotation.Priority;
+import javax.inject.Inject;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptor;
+import javax.interceptor.InvocationContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 
 @Interceptor
 @Transacional
 @Priority(Interceptor.Priority.APPLICATION)
 public class TransacionalInterceptor implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Inject

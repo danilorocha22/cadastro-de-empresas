@@ -5,6 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
+    <h:outputStylesheet library="static" name="style.css" />
     <title>Gestão Empresas</title>
 </h:head>
 
@@ -13,90 +14,10 @@
         <h:graphicImage library="static" name="logo2.png" style="height:35px; padding: 0; margin: 0"/>
     </header>
 
+    <h2>Cadastro de Empresas</h2>
+
     <div id="conteudo">
-        <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Razão Social: " for="razaoSocial"/>
-                <h:panelGroup>
-                    <h:inputText id="razaoSocial" label="Razão Social" required="true"
-                                 value="#{empresaBean.empresa.razaoSocial}"/>
-                    <h:message for="razaoSocial"/>
-                </h:panelGroup>
 
-                <h:outputLabel value="CNPJ: " for="cnpj"/>
-                <h:panelGroup>
-                    <!--<p:inputMask id="cnpj" label="CNPJ" required="true"  mask="99.999.999/9999-99"
-                                 value="#{empresaBean.empresa.cnpj}"/>-->
-                    <h:inputText id="cnpj" label="CNPJ" required="true"
-                                 value="#{empresaBean.empresa.cnpj}">
-                        <f:validateLength minimum="18" maximum="18" />
-                    </h:inputText>
-
-                    <h:message for="cnpj"/>
-                </h:panelGroup>
-
-                <h:outputLabel value="Nome Fantasia: " for="nomeFantasia"/>
-                <h:inputText id="nomeFantasia" value="#{empresaBean.empresa.nomeFantasia}"/>
-
-                <h:outputLabel value="Tipo de Empresa: " for="tipo"/>
-                <h:panelGroup>
-                    <h:selectOneMenu id="tipo" required="true" label="Tipo de Empresa"
-                                     value="#{empresaBean.empresa.tipo}">
-                        <f:selectItem itemLabel="Selecione..."/>
-                        <f:selectItems value="#{empresaBean.tiposEmpresa}"
-                                       var="tipoEmpresa" itemLabel="#{tipoEmpresa.descricao}" itemValue="#{tipoEmpresa}"/>
-                    </h:selectOneMenu>
-                    <h:message for="tipo"/>
-                </h:panelGroup>
-
-                <h:outputLabel value="Data Fundação: " for="dataFundacao"/>
-                <h:panelGroup>
-                    <h:inputText id="dataFundacao" required="true" value="#{empresaBean.empresa.fundadoEm}"
-                                 label=" Data Fundação">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:inputText>
-                    <h:message for="dataFundacao"/>
-                </h:panelGroup>
-
-                <h:outputLabel value="Faturamento: " for="faturamento"/>
-                <h:panelGroup>
-                    <h:inputText id="faturamento" required="true" label="Faturamento"
-                                 value="#{empresaBean.empresa.faturamento}">
-                        <f:convertNumber type="currency" currencySymbol="R$" pattern="#,##0.00"/>"
-                        <f:validateDoubleRange minimum="0"/>
-                    </h:inputText>
-                    <h:message for="faturamento"/>
-                </h:panelGroup>
-
-                <h:outputLabel/>
-                <h:commandButton value="Salvar" actionListener="#{empresaBean.salvar}"/>
-
-                <h:outputLabel/>
-                <h:commandLink value="Ajuda" action="#{empresaBean.redirecionarPaginaPara('ajuda')}"/>
-            </h:panelGrid>
-
-            <h:dataTable value="#{[0,0,0,0]}">
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Razão Social"/>
-                    </f:facet>
-                    <h:outputText value="DRS SA"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Nome Fantasia"/>
-                    </f:facet>
-                    <h:outputText value="DRS Tecnlogias"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Tipo de Empresa"/>
-                    </f:facet>
-                    <h:outputText value="SA"/>
-                </h:column>
-            </h:dataTable>
-
-        </h:form>
     </div>
 
     <footer> DRS Tecnologias</footer>

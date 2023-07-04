@@ -1,16 +1,14 @@
 package com.danrocha.cde.repositories;
 
 import com.danrocha.cde.entities.Empresa;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 
-import java.io.Serial;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.List;
 
 public class EmpresaRepository implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     @Inject

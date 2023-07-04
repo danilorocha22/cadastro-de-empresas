@@ -1,13 +1,7 @@
 package com.danrocha.cde.controllers;
 
-import com.danrocha.cde.entities.Empresa;
-import com.danrocha.cde.enums.TipoEmpresa;
-import jakarta.faces.application.NavigationHandler;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
-
-import java.io.Serial;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import java.io.Serializable;
 
 //@Model //bean gerenciado e com escopo de requisição, ou seja, combina as anotações @Named e @RequestScoped
@@ -15,30 +9,7 @@ import java.io.Serializable;
 @Named //Define que o bean é gerenciado. Esta anotação substituiu a anotação @ManagedBean
 @ViewScoped //Define que o bean tem escopo de requisição
 public class EmpresaBean implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
 
-    private final Empresa empresa = new Empresa();
 
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public TipoEmpresa[] getTiposEmpresa() {
-        return TipoEmpresa.values();
-    }
-
-    public void salvar() {
-        System.out.printf(
-                "Razão Social: %s %n Nome Fantasia: %s %n CNPJ: %s%n",
-                empresa.getRazaoSocial(), empresa.getNomeFantasia(), empresa.getCnpj());
-    }
-
-    public String redirecionarPaginaPara(String pagina) {
-        return switch (pagina) {
-            case "index" -> "index?faces-redirect=true";
-            case "ajuda" -> "ajuda?faces-redirect=true";
-            default -> null;
-        };
-    }
 }

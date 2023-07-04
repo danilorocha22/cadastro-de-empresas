@@ -1,16 +1,13 @@
 package com.danrocha.cde.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-
-import java.io.Serial;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "ramo_atividades")
 public class RamoAtividade implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id
