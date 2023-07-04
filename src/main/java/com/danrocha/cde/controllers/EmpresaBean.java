@@ -7,6 +7,7 @@ import com.danrocha.cde.repositories.EmpresaRepository;
 import com.danrocha.cde.repositories.RamoAtividadeRepository;
 import com.danrocha.cde.utils.FacesMessages;
 
+import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,20 +36,13 @@ public class EmpresaBean implements Serializable {
 
     private String termoPesquisa;
 
+    private Converter ramoAtividadeConverter;
+
+
+    /*Getters e Setters*/
+
     public List<Empresa> getEmpresas() {
         return empresas;
-    }
-
-    public void listarEmpresas() {
-        this.empresas = this.empresaRepo.listarTodas();
-    }
-
-    public void pesquisar() {
-        this.empresas = this.empresaRepo.pesquisar(this.termoPesquisa);
-
-        if (this.empresas.isEmpty()) {
-            this.messages.info("Sua consulta não retornou registros.");
-        }
     }
 
     public String getTermoPesquisa() {
@@ -67,7 +61,32 @@ public class EmpresaBean implements Serializable {
         return ramoAtividades;
     }
 
+    public Converter getRamoAtividadeConverter() {
+        return ramoAtividadeConverter;
+    }
+
+    /*Métodos*/
+
+    public void listarEmpresas() {
+        this.empresas = this.empresaRepo.listarTodas();
+    }
+
+    public List<RamoAtividade> completarRamoAtividade(String termo) {
+        List<RamoAtividade> listaAtividades = this.ramoRepo.pesquisar(termo);
+        this.ramoAtividadeConverter = new RamoAtividadeConverter(listaAtividades);
+        return listaAtividades;
+    }
+
+    public void pesquisar() {
+        this.empresas = this.empresaRepo.pesquisar(this.termoPesquisa);
+
+        if (this.empresas.isEmpty()) {
+            this.messages.info("Sua consulta não retornou registros.");
+        }
+    }
+
     public void listarRamoAtividades() {
         this.ramoAtividades = this.ramoRepo.listarTodas();
     }
+
 }

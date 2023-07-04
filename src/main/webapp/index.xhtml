@@ -103,14 +103,12 @@
                     <p:outputLabel value="Data Fundação:" for="dataFundacao"/>
                     <p:calendar id="dataFundacao" pattern="dd/MM/yyyy" size="80" maxlength="80"/>
 
-                    <p:outputLabel value="Ramo atividade" for="ramo"/>
-                    <!--<p:autoComplete id="ramoAtividade" size="80" maxlength="80"/>-->
-                    <!--<p:outputLabel value="Ramo Atividade:" for="ramo"/> -->
-                    <p:selectOneMenu id="ramo">
-                        <f:selectItem itemLabel="Selecione..."/>
-                        <f:selectItems value="#{empresaBean.ramoAtividades}" var="ramoAtividade"
-                                       itemLabel="#{ramoAtividade.descricao}" itemValue="#{ramoAtividade}"/>
-                    </p:selectOneMenu>
+                    <p:outputLabel value="Ramo Atividade" for="ramo"/>
+                    <p:autoComplete id="ramo" size="80" maxlength="80"
+                                    completeMethod="#{empresaBean.completarRamoAtividade}"
+                                    converter="#{empresaBean.ramoAtividadeConverter}"
+                                    var="ramoAtividade" itemLabel="#{ramoAtividade.descricao}"
+                                    itemValue="#{ramoAtividade}"/>
 
                     <h:outputLabel/>
                     <p:commandButton value="Salvar"/>

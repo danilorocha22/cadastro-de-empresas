@@ -1,6 +1,5 @@
 package com.danrocha.cde.repositories;
 
-import com.danrocha.cde.entities.Empresa;
 import com.danrocha.cde.entities.RamoAtividade;
 
 import javax.inject.Inject;
@@ -26,7 +25,7 @@ public class RamoAtividadeRepository implements Serializable {
         this.em = em;
     }
 
-    public List<RamoAtividade> buscarPeloNome(String descricao) {
+    public List<RamoAtividade> pesquisar(String descricao) {
         //Usando Criteria
         CriteriaBuilder builder = this.em.getCriteriaBuilder();
         CriteriaQuery<RamoAtividade> cQuery = builder.createQuery(RamoAtividade.class);
