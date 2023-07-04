@@ -26,11 +26,11 @@ public class EmpresaRepository implements Serializable {
         return this.em.find(Empresa.class, id);
     }
 
-    public List<Empresa> pesquisarPeloNome(String nome) {
+    public List<Empresa> pesquisar(String nome) {
         //Usando JPQL
-        String query = "FROM Empresa WHERE nomeFantasia LIKE :nomeFantasia";
+        String query = "FROM Empresa WHERE razaoSocial LIKE :razaoSocial";
         TypedQuery<Empresa> tQuery = this.em.createQuery(query, Empresa.class);
-        tQuery.setParameter("nomeFantasia", "%" + nome + "%"); //'%' no início, busca qualquer nome pelo prefixo e no final qualquer nome pelo sufixo
+        tQuery.setParameter("razaoSocial", "%" + nome + "%"); //'%' no início, busca qualquer nome pelo prefixo e no final qualquer nome pelo sufixo
         return tQuery.getResultList();
     }
 

@@ -1,5 +1,6 @@
 package com.danrocha.cde.repositories;
 
+import com.danrocha.cde.entities.Empresa;
 import com.danrocha.cde.entities.RamoAtividade;
 
 import javax.inject.Inject;
@@ -34,6 +35,10 @@ public class RamoAtividadeRepository implements Serializable {
         cQuery.where(builder.like(root.get("descricao"), "%" + descricao + "%"));
         TypedQuery<RamoAtividade> tQuery = this.em.createQuery(cQuery);
         return tQuery.getResultList();
+    }
+
+    public List<RamoAtividade> listarTodas() {
+        return this.em.createQuery("FROM RamoAtividade", RamoAtividade.class).getResultList();
     }
 
 
