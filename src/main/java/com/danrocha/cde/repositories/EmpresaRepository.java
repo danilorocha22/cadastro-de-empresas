@@ -13,40 +13,42 @@ public class EmpresaRepository implements Serializable {
 
     @Inject
     private transient EntityManager em;
-    
-    public EmpresaRepository() {}
+
+    public EmpresaRepository() {
+    }
 
     public EmpresaRepository(EntityManager em) {
-	super();
-	this.em = em;
+        super();
+        this.em = em;
     }
-    
+
     public Empresa buscarPeloId(Long id) {
-	return this.em.find(Empresa.class, id);
+        return this.em.find(Empresa.class, id);
     }
-    
-    public List<Empresa> buscarPeloNome(String nome) {
-	//Usando JPQL
-	String query = "from Empresa where nomeFantasia like :nomeFantasia";
-	TypedQuery<Empresa> tQuery = this.em.createQuery(query, Empresa.class); 
-	tQuery.setParameter("nomeFantasia", "%" + nome + "%"); //'%' no início, busca qualquer nome pelo prefixo e no final qualquer nome pelo sufixo
-	return tQuery.getResultList();
+
+    public List<Empresa> pesquisarPeloNome(String nome) {
+        //Usando JPQL
+        String query = "FROM Empresa WHERE nomeFantasia LIKE :nomeFantasia";
+        TypedQuery<Empresa> tQuery = this.em.createQuery(query, Empresa.class);
+        tQuery.setParameter("nomeFantasia", "%" + nome + "%"); //'%' no início, busca qualquer nome pelo prefixo e no final qualquer nome pelo sufixo
+        return tQuery.getResultList();
     }
-    
+
+    public List<Empresa> listarTodas() {
+        return this.em.createQuery("FROM Empresa", Empresa.class).getResultList();
+    }
+
     public Empresa salvarOuAtualizar(Empresa empresa) {
-	return this.em.merge(empresa);
+        return this.em.merge(empresa);
     }
-        
-    public void excluir(Long id) {;
-      this.em.remove(this.buscarPeloId(id));
+
+    public void excluir(Long id) {
+        this.em.remove(this.buscarPeloId(id));
     }
-    
+
     public void excluir(Empresa empresa) {
-	this.excluir(empresa.getId());
+        this.excluir(empresa.getId());
     }
-    
-    
-    
-    
+
 
 }

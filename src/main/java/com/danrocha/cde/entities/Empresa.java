@@ -6,7 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -45,8 +44,8 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "ramo_atividade_id")
     private RamoAtividade ramoAtividade;
 
-    @Column(precision = 10, scale = 2)
-    private BigDecimal faturamento;
+    /*@Column(precision = 10, scale = 2)
+    private BigDecimal faturamento;*/
 
     @Override
     public String toString() {
@@ -110,13 +109,13 @@ public class Empresa implements Serializable {
         this.ramoAtividade = ramoAtividade;
     }
 
-    public BigDecimal getFaturamento() {
+    /*public BigDecimal getFaturamento() {
         return faturamento;
-    }
+    }*/
 
-    public void setFaturamento(BigDecimal faturamento) {
+   /* public void setFaturamento(BigDecimal faturamento) {
         this.faturamento = faturamento;
-    }
+    }*/
 
     @Override
     public int hashCode() {
