@@ -14,7 +14,7 @@ public class CadastroEmpresaService implements Serializable {
     private EmpresaRepository repo;
 
     @Transacional
-    public Empresa salvar(Empresa empresa) {
+    public Empresa salvarOuAtualizar(Empresa empresa) {
         return repo.salvarOuAtualizar(empresa);
     }
 

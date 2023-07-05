@@ -5,6 +5,7 @@ import com.danrocha.cde.entities.RamoAtividade;
 import com.danrocha.cde.enums.TipoEmpresa;
 import com.danrocha.cde.repositories.EmpresaRepository;
 import com.danrocha.cde.repositories.RamoAtividadeRepository;
+import com.danrocha.cde.services.CadastroEmpresaService;
 import com.danrocha.cde.utils.FacesMessages;
 
 import javax.faces.convert.Converter;
@@ -30,14 +31,16 @@ public class EmpresaBean implements Serializable {
     @Inject
     private FacesMessages messages;
 
-    private List<Empresa> empresas;
+    @Inject
+    private CadastroEmpresaService empresaService;
 
-    private List<RamoAtividade> ramoAtividades;
+    private List<Empresa> empresas;
 
     private String termoPesquisa;
 
-    private Converter ramoAtividadeConverter;
+    private transient Converter<RamoAtividade> ramoAtividadeConverter;
 
+    private Empresa empresa;
 
     /*Getters e Setters*/
 
@@ -57,12 +60,12 @@ public class EmpresaBean implements Serializable {
         return TipoEmpresa.values();
     }
 
-    public List<RamoAtividade> getRamoAtividades() {
-        return ramoAtividades;
+    public Converter<RamoAtividade> getRamoAtividadeConverter() {
+        return ramoAtividadeConverter;
     }
 
-    public Converter getRamoAtividadeConverter() {
-        return ramoAtividadeConverter;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
     /*Métodos*/
@@ -85,8 +88,20 @@ public class EmpresaBean implements Serializable {
         }
     }
 
-    public void listarRamoAtividades() {
-        this.ramoAtividades = this.ramoRepo.listarTodas();
+    public void salvar() {
+        this.empresa.setId(null);
+        Empresa emp = this.empresaService.salvarOuAtualizar(this.empresa);
+        if (jaHouvePesquisa()) {
+            this.pesquisar();
+        }
+        this.messages.info(String.format("Empresa %s, cadastrada com sucesso!", emp.getRazaoSocial()));
     }
 
+    public void prepararNovaEmpresa() {
+        this.empresa = new Empresa();
+    }
+
+    private boolean jaHouvePesquisa() {
+        return termoPesquisa != null && !termoPesquisa.trim().isEmpty() && !"".equals(termoPesquisa);
+    }
 }

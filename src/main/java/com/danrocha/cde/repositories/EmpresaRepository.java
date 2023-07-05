@@ -12,13 +12,12 @@ public class EmpresaRepository implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private transient EntityManager em;
+    private EntityManager em;
 
     public EmpresaRepository() {
     }
 
     public EmpresaRepository(EntityManager em) {
-        super();
         this.em = em;
     }
 
