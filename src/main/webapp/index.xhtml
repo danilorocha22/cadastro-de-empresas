@@ -75,7 +75,9 @@
                     </span>
 
                     <!--Botão Exportar-->
-                    <p:commandButton title="Exportar para o Excel" icon="fa fa-file-excel-o"/>
+                    <p:commandButton title="Exportar para o Excel" icon="fa fa-file-excel-o" ajax="false" >
+                        <p:dataExporter target="empresaTable" type="xls" fileName="empresas-cadastradas" />
+                    </p:commandButton>
                 </f:facet>
             </p:toolbar>
 

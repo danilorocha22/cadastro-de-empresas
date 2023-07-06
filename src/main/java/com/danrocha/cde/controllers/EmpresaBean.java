@@ -77,7 +77,7 @@ public class EmpresaBean implements Serializable {
     /*Métodos*/
 
     public void listarEmpresas() {
-        this.empresas.addAll(this.empresaRepo.listarTodas());
+        this.empresas = this.empresaRepo.listarTodas();
     }
 
     public List<RamoAtividade> completarRamoAtividade(String termo) {
@@ -87,7 +87,7 @@ public class EmpresaBean implements Serializable {
     }
 
     public void pesquisar() {
-        this.empresas.addAll(this.empresaRepo.pesquisar(this.termoPesquisa));
+        this.empresas = this.empresaRepo.pesquisar(this.termoPesquisa);
         if (this.empresas.isEmpty()) {
             this.messages.warning("Sua consulta não retornou registros.");
         }

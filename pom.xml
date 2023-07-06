@@ -66,6 +66,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+        <!--Exportar arquivos para xml-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.0.0</version>
+            <scope>compile</scope>
+        </dependency>
         <!--Teste-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
