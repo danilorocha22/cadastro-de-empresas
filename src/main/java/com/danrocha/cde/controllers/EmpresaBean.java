@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 //@Model //bean gerenciado e com escopo de requisição, ou seja, combina as anotações @Named e @RequestScoped
 //@ManagedBean //anotação mais antiga para gerenciar os beans
@@ -94,16 +95,22 @@ public class EmpresaBean implements Serializable {
     }
 
     public void salvar() {
-        Empresa emp = this.empresaService.salvarOuAtualizar(this.empresa);
-        if (jaHouvePesquisa()) {
-            this.pesquisar();
+        Empresa empresaRegistro = this.empresaService.salvarOuAtualizar(this.empresa);
+        this.atualizarRegistro();//Serve para atualizar a lista de registro da tabela
+        this.atualizarVizualizacaoTabela(); //Serve para atualizar a view da tabela
+        if (Objects.nonNull(this.empresa.getId())) {
+            this.alertMessages("Registro atualizado com sucesso: ", empresaRegistro);
         } else {
-            this.listarEmpresas();
+            this.alertMessages("Registro salvo com sucesso: ", empresaRegistro);
         }
-        this.messages.info(String.format("Registro salvo com sucesso: %s", emp.getRazaoSocial()));
+    }
 
-        //Serve para atualizar os componentes do view, quando este método for executado
-        PrimeFaces.current().ajax().update(List.of("form:empresaTable", "form:messagesForm"));
+    public void excluir() {
+        this.empresaService.excluir(this.empresa);
+        this.alertMessages("Registro excluído com sucesso: ", this.empresa);
+        this.empresa = null;
+        this.atualizarRegistro();
+        //this.atualizarVizualizacaoTabela();
     }
 
     public void prepararNovaEmpresa() {
@@ -114,11 +121,27 @@ public class EmpresaBean implements Serializable {
         ramoAtividadeConverter = new RamoAtividadeConverter(List.of(this.empresa.getRamoAtividade()));
     }
 
+    public boolean isEmpresaSelecionada() {
+        return this.empresa != null && this.empresa.getId() != null;
+    }
+
+    private void atualizarRegistro() {
+        if (jaHouvePesquisa()) {
+            this.pesquisar();
+        } else {
+            this.listarEmpresas();
+        }
+    }
+
     private boolean jaHouvePesquisa() {
         return termoPesquisa != null && !termoPesquisa.trim().isEmpty() && !"".equals(termoPesquisa);
     }
 
-    public boolean isEmpresaSelecionada() {
-        return this.empresa != null && this.empresa.getId() != null;
+    private void atualizarVizualizacaoTabela() {
+        PrimeFaces.current().ajax().update(List.of("form:empresaTable", "form:messagesForm"));
+    }
+
+    private void alertMessages(String msg, Empresa emp) {
+        this.messages.info(msg + emp.getRazaoSocial());
     }
 }

@@ -18,7 +18,7 @@
             <p:messages id="messagesForm"/>
 
             <!--Barra de menu-->
-            <p:toolbar id="toolBarMenu">
+            <p:toolbar id="toolBarForm">
                 <f:facet name="left">
                     <!--Input Pesquisar-->
                     <p:inputText id="inputPesquisa" placeholder="Informe um termo para pesquisa..." size="30"
@@ -32,8 +32,10 @@
                     </span>
 
                     <!--Botão Novo-->
-                    <p:commandButton value="Novo" icon="fa fa-plus" actionListener="#{empresaBean.prepararNovaEmpresa}"
-                                     oncomplete="PF('novaEmpresaDialogWidget').show()" update="empresaDialog"
+                    <p:commandButton value="Novo" icon="fa fa-plus"
+                                     actionListener="#{empresaBean.prepararNovaEmpresa}"
+                                     oncomplete="PF('novaEmpresaDialogWidget').show()"
+                                     update="empresaDialog"
                                      process="@this">
                         <p:resetInput
                                 target="empresaDialog"/><!--Reseta os componentes de formulários para o estado inicial-->
@@ -49,14 +51,18 @@
                                      actionListener="#{empresaBean.prepararEdicaoEmpresa}"
                                      oncomplete="PF('novaEmpresaDialogWidget').show()"
                                      update="empresaDialog"
-                                     process="@this" >
+                                     process="@this">
                         <p:resetInput
                                 target="empresaDialog"/><!--Reseta os componentes de formulários para o estado inicial-->
                     </p:commandButton>
 
                     <!--Botão Excluir-->
                     <p:commandButton title="Excluir" icon="fa fa-trash"
-                                     disabled="#{not empresaBean.empresaSelecionada}"/>
+                                     disabled="#{not empresaBean.empresaSelecionada}"
+                                     actionListener="#{empresaBean.excluir}"
+                                     oncomplete="PF('confirmarExclusaoWidget').show()"
+                                     update="empresaTable messagesForm toolBarForm"
+                                     process="@this" />
 
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical"/>
@@ -77,9 +83,10 @@
 
                 <!--Quando uma linha for selecionada na tabela, dispara eventos para atualizar o estado da tabela,
                  habilitando assim os compenentes-->
-                <p:ajax event="rowSelect" update="form:toolBarMenu"/>
+                <p:ajax event="rowSelect" update="form:toolBarForm"/>
+
                 <!--Evento disparado quando uma linha for desmarcada, desabilitando assim os componentes da tabela-->
-                <p:ajax event="rowUnselect" update="form:toolBarMenu"/>
+                <p:ajax event="rowUnselect" update="form:toolBarForm"/>
 
 
                 <p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}">
