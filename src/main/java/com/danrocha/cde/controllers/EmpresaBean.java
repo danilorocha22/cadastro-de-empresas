@@ -77,7 +77,7 @@ public class EmpresaBean implements Serializable {
     /*Métodos*/
 
     public void listarEmpresas() {
-        this.empresas = this.empresaRepo.listarTodas();
+        this.empresas.addAll(this.empresaRepo.listarTodas());
     }
 
     public List<RamoAtividade> completarRamoAtividade(String termo) {
@@ -87,8 +87,7 @@ public class EmpresaBean implements Serializable {
     }
 
     public void pesquisar() {
-        this.empresas = this.empresaRepo.pesquisar(this.termoPesquisa);
-
+        this.empresas.addAll(this.empresaRepo.pesquisar(this.termoPesquisa));
         if (this.empresas.isEmpty()) {
             this.messages.warning("Sua consulta não retornou registros.");
         }
@@ -96,8 +95,8 @@ public class EmpresaBean implements Serializable {
 
     public void salvar() {
         Empresa empresaRegistro = this.empresaService.salvarOuAtualizar(this.empresa);
-        this.atualizarRegistro();//Serve para atualizar a lista de registro da tabela
-        this.atualizarVizualizacaoTabela(); //Serve para atualizar a view da tabela
+        this.atualizarRegistro();//Atualizar a lista de registro da tabela
+        this.atualizarVisualizacaoTabela(); //Atualizar a view da tabela
         if (Objects.nonNull(this.empresa.getId())) {
             this.alertMessages("Registro atualizado com sucesso: ", empresaRegistro);
         } else {
@@ -107,10 +106,10 @@ public class EmpresaBean implements Serializable {
 
     public void excluir() {
         this.empresaService.excluir(this.empresa);
-        this.alertMessages("Registro excluído com sucesso: ", this.empresa);
-        this.empresa = null;
+        this.setEmpresa(null);
         this.atualizarRegistro();
-        //this.atualizarVizualizacaoTabela();
+        this.alertMessages("Registro excluído com sucesso: ", this.empresa);
+        //this.atualizarVisualizacaoTabela();
     }
 
     public void prepararNovaEmpresa() {
@@ -134,14 +133,15 @@ public class EmpresaBean implements Serializable {
     }
 
     private boolean jaHouvePesquisa() {
-        return termoPesquisa != null && !termoPesquisa.trim().isEmpty() && !"".equals(termoPesquisa);
+        return termoPesquisa != null && !termoPesquisa.trim().isEmpty();
     }
 
-    private void atualizarVizualizacaoTabela() {
+    private void atualizarVisualizacaoTabela() {
         PrimeFaces.current().ajax().update(List.of("form:empresaTable", "form:messagesForm"));
     }
 
     private void alertMessages(String msg, Empresa emp) {
         this.messages.info(msg + emp.getRazaoSocial());
     }
+
 }

@@ -14,6 +14,10 @@
         </f:metadata>
 
         <h:form id="form">
+            <p:confirmDialog global="true">
+
+            </p:confirmDialog>
+
             <!--Alert-->
             <p:messages id="messagesForm"/>
 
@@ -62,7 +66,9 @@
                                      actionListener="#{empresaBean.excluir}"
                                      oncomplete="PF('confirmarExclusaoWidget').show()"
                                      update="empresaTable messagesForm toolBarForm"
-                                     process="@this" />
+                                     process="@this">
+                        <p:confirm icon="ui-icon-alert" message="Tem certeza que deseja excluir #{empresaBean.empresa.nomeFantasia}?"/>
+                    </p:commandButton>
 
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical"/>
