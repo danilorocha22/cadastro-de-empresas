@@ -86,7 +86,7 @@ public class EmpresaBean implements Serializable {
         this.empresas = this.empresaRepo.pesquisar(this.termoPesquisa);
 
         if (this.empresas.isEmpty()) {
-            this.messages.info("Sua consulta não retornou registros.");
+            this.messages.warning("Sua consulta não retornou registros.");
         }
     }
 
