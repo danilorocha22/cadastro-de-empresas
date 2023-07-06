@@ -13,12 +13,9 @@
             <f:viewAction action="#{empresaBean.listarEmpresas}"/><!--chama o metodo com os dados do banco-->
         </f:metadata>
 
-        <h:form>
-
+        <h:form id="form">
             <!--Alert-->
-            <p:messages>
-                <p:autoUpdate/>
-            </p:messages>
+            <p:messages id="messagesForm" />
 
             <!--Barra de menu-->
             <p:toolbar>
@@ -28,7 +25,7 @@
                                  value="#{empresaBean.termoPesquisa}"/>
                     <!--Botão Pesquisar-->
                     <p:commandButton value="Pesquisar" icon="fa fa-search" actionListener="#{empresaBean.pesquisar}"
-                                     update="empresaTable" process="@this inputPesquisa"/>
+                                     update="empresaTable messagesForm" process="@this inputPesquisa"/>
 
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical"/>
@@ -92,10 +89,13 @@
                       resizable="false"
                       closeOnEscape="true">
 
+                <!--Alert-->
+                <p:messages id="messagesDialog"/>
+
                 <p:panelGrid id="empresaPanel" columns="2" rendered="#{empresaBean.empresa ne null}">
                     <!--Razao Social-->
                     <p:outputLabel value="Razão Social:" for="razaoSocial"/>
-                    <p:inputText id="razaoSocial" size="80" maxlength="120" required="true"
+                    <p:inputText id="razaoSocial" size="80" maxlength="120"
                                  value="#{empresaBean.empresa.razaoSocial}"/>
 
                     <!--Nome Fantasia-->
@@ -105,7 +105,7 @@
 
                     <!--Tipo Empresa-->
                     <p:outputLabel value="Tipo de Empresa:" for="tipo"/>
-                    <p:selectOneMenu id="tipo" value="#{empresaBean.empresa.tipo}" required="true">
+                    <p:selectOneMenu id="tipo" value="#{empresaBean.empresa.tipo}">
                         <f:selectItem itemLabel="Selecione..."/>
                         <f:selectItems value="#{empresaBean.tiposEmpresa}"
                                        var="tipoEmpresa"
@@ -115,17 +115,17 @@
 
                     <!--CNPJ-->
                     <p:outputLabel value="CNPJ:" for="cnpj"/>
-                    <p:inputMask id="cnpj" mask="99.999.999/9999-99" size="15" maxlength="18" required="true"
+                    <p:inputMask id="cnpj" mask="99.999.999/9999-99" size="15" maxlength="18"
                                  placeholder="__.___.___/____-__" value="#{empresaBean.empresa.cnpj}"/>
 
                     <!--Data Fundação-->
                     <p:outputLabel value="Data Fundação:" for="dataFundacao"/>
                     <p:calendar id="dataFundacao" pattern="dd/MM/yyyy" size="15" placeholder="dd/mm/aaaa"
-                                required="true" value="#{empresaBean.empresa.fundadoEm}"/>
+                                value="#{empresaBean.empresa.fundadoEm}"/>
 
                     <!--Ramo Atividade-->
                     <p:outputLabel value="Ramo Atividade:" for="ramo"/>
-                    <p:autoComplete id="ramo" size="80" maxlength="80" required="true"
+                    <p:autoComplete id="ramo" size="80" maxlength="80"
                                     value="#{empresaBean.empresa.ramoAtividade}"
                                     completeMethod="#{empresaBean.completarRamoAtividade}"
                                     converter="#{empresaBean.ramoAtividadeConverter}"
@@ -137,8 +137,8 @@
                     <h:outputLabel/>
                     <p:commandButton value="Salvar"
                                      actionListener="#{empresaBean.salvar}"
-                                     update="empresaTable empresaPanel"
-                                     oncomplete="PF('novaEmpresaDialogWidget').hide()"
+                                     update="empresaPanel messagesDialog"
+                                     oncomplete="if (!args.validationFailed) PF('novaEmpresaDialogWidget').hide()"
                                      process="empresaDialog"/>
                 </p:panelGrid>
             </p:dialog>

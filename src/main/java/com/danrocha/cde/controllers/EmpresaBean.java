@@ -7,6 +7,8 @@ import com.danrocha.cde.repositories.EmpresaRepository;
 import com.danrocha.cde.repositories.RamoAtividadeRepository;
 import com.danrocha.cde.services.CadastroEmpresaService;
 import com.danrocha.cde.utils.FacesMessages;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
 
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
@@ -89,12 +91,16 @@ public class EmpresaBean implements Serializable {
     }
 
     public void salvar() {
-        this.empresa.setId(null);
         Empresa emp = this.empresaService.salvarOuAtualizar(this.empresa);
         if (jaHouvePesquisa()) {
             this.pesquisar();
+        } else {
+            this.listarEmpresas();
         }
-        this.messages.info(String.format("Empresa %s, cadastrada com sucesso!", emp.getRazaoSocial()));
+        this.messages.info(String.format("Registro salvo com sucesso: %s", emp.getRazaoSocial()));
+
+        //Serve para atualizar os componentes do view, quando este método for executado
+        PrimeFaces.current().ajax().update(List.of("form:empresaTable", "form:messagesForm"));
     }
 
     public void prepararNovaEmpresa() {

@@ -1,10 +1,12 @@
 package com.danrocha.cde.entities;
 
 import com.danrocha.cde.enums.TipoEmpresa;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -22,20 +24,22 @@ public class Empresa implements Serializable {
     @Column(name = "nome_fantasia", length = 80)
     private String nomeFantasia;
     
-    @NotBlank(message = "Campo obrigatório.")
+    @NotBlank
     @Column(name = "razao_social", nullable = false, length = 120)
     private String razaoSocial;
-    
-    @NotBlank(message = "Campo obrigatório.")
+
+    @CNPJ
+    /*@NotBlank(message = "é obrigatório.")*/
     @Column(nullable = false, length = 18) //11111111000111
     private String cnpj;
     
-    @NotNull(message = "Campo obrigatório.")
+    @NotNull
     //@JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "fundado_em")
+    @PastOrPresent(message = "não é permitido cadastrar uma data futura.")
+    @Column(name = "fundado_em", nullable = false)
     private LocalDate fundadoEm;
     
-    @NotNull(message = "Campo obrigatório.")
+    @NotNull
     @Enumerated(EnumType.STRING)
     private TipoEmpresa tipo;
 
