@@ -34,7 +34,9 @@
                     <!--Botão Novo-->
                     <p:commandButton value="Novo" icon="fa fa-plus" actionListener="#{empresaBean.prepararNovaEmpresa}"
                                      oncomplete="PF('novaEmpresaDialogWidget').show()" update="empresaDialog"
-                                     process="@this"/>
+                                     process="@this" >
+                        <p:resetInput target="empresaDialog"/>
+                    </p:commandButton>
 
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical"/>
