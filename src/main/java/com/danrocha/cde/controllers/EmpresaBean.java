@@ -110,6 +110,10 @@ public class EmpresaBean implements Serializable {
         this.empresa = new Empresa();
     }
 
+    public void prepararEdicaoEmpresa() {
+        ramoAtividadeConverter = new RamoAtividadeConverter(List.of(this.empresa.getRamoAtividade()));
+    }
+
     private boolean jaHouvePesquisa() {
         return termoPesquisa != null && !termoPesquisa.trim().isEmpty() && !"".equals(termoPesquisa);
     }

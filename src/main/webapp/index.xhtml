@@ -15,7 +15,7 @@
 
         <h:form id="form">
             <!--Alert-->
-            <p:messages id="messagesForm" />
+            <p:messages id="messagesForm"/>
 
             <!--Barra de menu-->
             <p:toolbar id="toolBarMenu">
@@ -34,8 +34,9 @@
                     <!--Botão Novo-->
                     <p:commandButton value="Novo" icon="fa fa-plus" actionListener="#{empresaBean.prepararNovaEmpresa}"
                                      oncomplete="PF('novaEmpresaDialogWidget').show()" update="empresaDialog"
-                                     process="@this" >
-                        <p:resetInput target="empresaDialog"/><!--Reseta os componentes de formulários para o estado inicial-->
+                                     process="@this">
+                        <p:resetInput
+                                target="empresaDialog"/><!--Reseta os componentes de formulários para o estado inicial-->
                     </p:commandButton>
 
                     <span class="ui-separator">
@@ -44,7 +45,14 @@
 
                     <!--Botão Editar-->
                     <p:commandButton title="Editar" icon="fa fa-edit"
-                                     disabled="#{not empresaBean.empresaSelecionada}"/>
+                                     disabled="#{not empresaBean.empresaSelecionada}"
+                                     actionListener="#{empresaBean.prepararEdicaoEmpresa}"
+                                     oncomplete="PF('novaEmpresaDialogWidget').show()"
+                                     update="empresaDialog"
+                                     process="@this" >
+                        <p:resetInput
+                                target="empresaDialog"/><!--Reseta os componentes de formulários para o estado inicial-->
+                    </p:commandButton>
 
                     <!--Botão Excluir-->
                     <p:commandButton title="Excluir" icon="fa fa-trash"
@@ -69,9 +77,9 @@
 
                 <!--Quando uma linha for selecionada na tabela, dispara eventos para atualizar o estado da tabela,
                  habilitando assim os compenentes-->
-                <p:ajax event="rowSelect" update="form:toolBarMenu"  />
+                <p:ajax event="rowSelect" update="form:toolBarMenu"/>
                 <!--Evento disparado quando uma linha for desmarcada, desabilitando assim os componentes da tabela-->
-                <p:ajax event="rowUnselect" update="form:toolBarMenu"  />
+                <p:ajax event="rowUnselect" update="form:toolBarMenu"/>
 
 
                 <p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}">
@@ -102,7 +110,7 @@
                       closeOnEscape="true">
 
                 <!--Comando padrão, quando o usuário clicar enter no formulário-->
-                <p:defaultCommand target="commandBtnSalvar" scope="empresaDialog" />
+                <p:defaultCommand target="commandBtnSalvar" scope="empresaDialog"/>
 
                 <!--Alert-->
                 <p:messages id="messagesDialog"/>
