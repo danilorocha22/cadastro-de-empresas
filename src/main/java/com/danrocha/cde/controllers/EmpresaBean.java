@@ -8,7 +8,6 @@ import com.danrocha.cde.repositories.RamoAtividadeRepository;
 import com.danrocha.cde.services.CadastroEmpresaService;
 import com.danrocha.cde.utils.FacesMessages;
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeRequestContext;
 
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
@@ -70,6 +69,10 @@ public class EmpresaBean implements Serializable {
         return empresa;
     }
 
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
     /*Métodos*/
 
     public void listarEmpresas() {
@@ -109,5 +112,9 @@ public class EmpresaBean implements Serializable {
 
     private boolean jaHouvePesquisa() {
         return termoPesquisa != null && !termoPesquisa.trim().isEmpty() && !"".equals(termoPesquisa);
+    }
+
+    public boolean isEmpresaSelecionada() {
+        return this.empresa != null && this.empresa.getId() != null;
     }
 }

@@ -18,7 +18,7 @@
             <p:messages id="messagesForm" />
 
             <!--Barra de menu-->
-            <p:toolbar>
+            <p:toolbar id="toolBarMenu">
                 <f:facet name="left">
                     <!--Input Pesquisar-->
                     <p:inputText id="inputPesquisa" placeholder="Informe um termo para pesquisa..." size="30"
@@ -43,10 +43,12 @@
                     </span>
 
                     <!--Botão Editar-->
-                    <p:commandButton title="Editar" icon="fa fa-edit"/>
+                    <p:commandButton title="Editar" icon="fa fa-edit"
+                                     disabled="#{not empresaBean.empresaSelecionada}"/>
 
                     <!--Botão Excluir-->
-                    <p:commandButton title="Excluir" icon="fa fa-trash"/>
+                    <p:commandButton title="Excluir" icon="fa fa-trash"
+                                     disabled="#{not empresaBean.empresaSelecionada}"/>
 
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical"/>
@@ -62,7 +64,15 @@
             <!--Tabela-->
             <p:dataTable id="empresaTable" value="#{empresaBean.empresas}" var="empresa"
                          emptyMessage="Nenhuma informação a ser exibida."
-                         paginator="true" rows="10" paginatorPosition="bottom">
+                         paginator="true" rows="10" paginatorPosition="bottom"
+                         selectionMode="single" selection="#{empresaBean.empresa}" rowKey="#{empresa.id}">
+
+                <!--Quando uma linha for selecionada na tabela, dispara eventos para atualizar o estado da tabela,
+                 habilitando assim os compenentes-->
+                <p:ajax event="rowSelect" update="form:toolBarMenu"  />
+                <!--Evento disparado quando uma linha for desmarcada, desabilitando assim os componentes da tabela-->
+                <p:ajax event="rowUnselect" update="form:toolBarMenu"  />
+
 
                 <p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}">
                     <h:outputText value="#{empresa.razaoSocial}"/>
