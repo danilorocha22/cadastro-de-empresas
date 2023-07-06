@@ -35,7 +35,7 @@
                     <p:commandButton value="Novo" icon="fa fa-plus" actionListener="#{empresaBean.prepararNovaEmpresa}"
                                      oncomplete="PF('novaEmpresaDialogWidget').show()" update="empresaDialog"
                                      process="@this" >
-                        <p:resetInput target="empresaDialog"/>
+                        <p:resetInput target="empresaDialog"/><!--Reseta os componentes de formulários para o estado inicial-->
                     </p:commandButton>
 
                     <span class="ui-separator">
@@ -91,6 +91,9 @@
                       resizable="false"
                       closeOnEscape="true">
 
+                <!--Comando padrão, quando o usuário clicar enter no formulário-->
+                <p:defaultCommand target="commandBtnSalvar" scope="empresaDialog" />
+
                 <!--Alert-->
                 <p:messages id="messagesDialog"/>
 
@@ -137,7 +140,7 @@
 
                     <!--Botão Salvar-->
                     <h:outputLabel/>
-                    <p:commandButton value="Salvar"
+                    <p:commandButton id="commandBtnSalvar" value="Salvar"
                                      actionListener="#{empresaBean.salvar}"
                                      update="empresaPanel messagesDialog"
                                      oncomplete="if (!args.validationFailed) PF('novaEmpresaDialogWidget').hide()"
